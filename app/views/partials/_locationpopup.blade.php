@@ -1,0 +1,1 @@
+<dl class="dl-horizontal"><dt>Уровень сигнала: </dt><dd>{{{ $location->level }}}</dd><dt>Высота: </dt><dd>{{{ $location->altitude }}}</dd><dt>Точность: </dt><dd>{{{ $location->accuracy }}}</dd><dt>Время замера: </dt><dd>{{{ $location->time }}}</dd></dl>

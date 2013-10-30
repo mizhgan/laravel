@@ -1,0 +1,1 @@
+<div class="col-md-8"><p class="text-muted credit">Статистика из базы: всего точек {{Network::all()->count()}}, всего местоположений {{Location::all()->count()}}</p></div>

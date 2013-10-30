@@ -1,0 +1,389 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"func",
+				"create_function"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/models/Type.php",
+			"settings":
+			{
+				"buffer_size": 132,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/User.php",
+			"settings":
+			{
+				"buffer_size": 843,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/models/Network.php",
+			"settings":
+			{
+				"buffer_size": 294,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/views/networks/show.blade.php",
+			"settings":
+			{
+				"buffer_size": 892,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/NetworksController.php",
+			"settings":
+			{
+				"buffer_size": 2371,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/database/migrations/2013_10_16_093232_create_locations_table.php",
+			"settings":
+			{
+				"buffer_size": 685,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"migra",
+				"Laravel Artisan: Migrate"
+			],
+			[
+				"laravel migrate",
+				"Laravel Artisan: Migrate: Rollback"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"laravel",
+				"Laravel Generate: View"
+			]
+		],
+		"width": 728.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/views/networks.map.blade.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/views/hello.php",
+		"/D/Users/mizhgan-work/AppData/Roaming/Sublime Text 2/Packages/Laravel 4 Artisan/Laravel 4 Artisan.sublime-settings",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/views/types/index.blade.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/controllers/HomeController.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/models/Capability.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/models/Location.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/controllers/NetworksController.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/models/Type.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/models/Network.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/models/User.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/config/database.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/composer.json",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/config/app.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/routes.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/database/migrations/2013_10_16_093423_pivot_location_network_table.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/database/migrations/2013_10_16_093232_create_locations_table.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/database/seeds/NetworksTableSeeder.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/database/migrations/2013_10_16_090836_create_networks_table.php",
+		"/C/Winginx/home/wifimap.dev/public_html/laravel/app/database/migrations/2013_10_16_090019_create_networks_table.php"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 5,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/models/Type.php",
+					"settings":
+					{
+						"buffer_size": 132,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								67,
+								67
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/models/User.php",
+					"settings":
+					{
+						"buffer_size": 843,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/Network.php",
+					"settings":
+					{
+						"buffer_size": 294,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								294,
+								294
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/views/networks/show.blade.php",
+					"settings":
+					{
+						"buffer_size": 892,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Laravel Blade Highlighter/laravel-blade.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/controllers/NetworksController.php",
+					"settings":
+					{
+						"buffer_size": 2371,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 810.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "app/database/migrations/2013_10_16_093232_create_locations_table.php",
+					"settings":
+					{
+						"buffer_size": 685,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								518,
+								518
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 218.0,
+	"status_bar_visible": true
+}

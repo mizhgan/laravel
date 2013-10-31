@@ -7,7 +7,7 @@ class Import extends Eloquent {
 		'hash' => 'required'
 	);
 
-	public static $db_path = "c:\Winginx\home\wifimap.dev\public_html\data\wiglewifi.sqlite";
+	public static $db_path = "../../data/wigle/mizhgan/wiglewifi.sqlite";
 
 	public function getHash() {
 		return hash_file('md5', $this::$db_path);

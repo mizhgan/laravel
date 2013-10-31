@@ -41,6 +41,10 @@ Route::group(array('before' => 'admin.auth'), function()
         return View::make('login.dashboard');
     });
 
+    Route::post('upload', array('uses' => 'ImportsController@uploadDbFile'));
+
+    Route::post('performstore', array('as' => 'imports.performstore', 'uses' => 'ImportsController@performStore'));
+
 	Route::group(array('before' => 'admin_role_only'), function()
     {
 

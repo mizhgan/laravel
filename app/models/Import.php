@@ -12,7 +12,7 @@ class Import extends Eloquent {
 	public static $upload_path = "../../data/upload";
 
 	public function getHash() {
-		return hash_file('md5', $this::$db_path);
+		return file_exists($this::$db_path) ? hash_file('md5', $this::$db_path) : false;
 	}
 
 	public function Needed()

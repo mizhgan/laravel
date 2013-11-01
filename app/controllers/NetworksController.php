@@ -37,17 +37,19 @@ class NetworksController extends BaseController {
 				$features = array();
 				foreach ($networks as $key => $network) {
 
-					$loudest_location = $network->loudest_location();
-					$latest_location = $network->latest_location();
+					if ($network->locations->all()) {
+						$loudest_location = $network->loudest_location();
+						$latest_location = $network->latest_location();
 
-					$type = $network->types->first()->name;
-					$capabilities = '';
-					foreach ($network->capabilities as $capability) {
-						$capabilities .= $capability->name.' ';	
+						$type = $network->types->first()->name;
+						$capabilities = '';
+						foreach ($network->capabilities as $capability) {
+							$capabilities .= $capability->name.' ';	
+						}
+						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
+						
+						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 					}
-					$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
-					
-					$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 
 				}
 				$geojson = json_encode(new \GeoJson\Feature\FeatureCollection($features));
@@ -218,30 +220,41 @@ class NetworksController extends BaseController {
 
 	public function debug()
 	{
+
+			// $networks = $this->network->all();
+			// foreach ($networks as $network) {
+			// 	if ($network->locations->all()) {
+
+			// 	} else {
+			// 		return var_dump($network);
+			// 	}
+			// }
+			// return "ok";
 			$geojson = '';
 			$returngeojson = Cache::remember('geojsonpoints', 60, function()
 			{
 				$networks = $this->network->all();//take(100)->get(); //Дебаг! Изменить на $this->network->all();
 				$features = array();
 				foreach ($networks as $key => $network) {
+					if ($network->locations->all()) {
+						$loudest_location = $network->loudest_location();
+						$latest_location = $network->latest_location();
 
-					$loudest_location = $network->loudest_location();
-					$latest_location = $network->latest_location();
+						$type = $network->types->first()->name;
+						$capabilities = '';
+						foreach ($network->capabilities as $capability) {
+							$capabilities .= $capability->name.' ';	
+						}
+						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
+						
+						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 
-					$type = $network->types->first()->name;
-					$capabilities = '';
-					foreach ($network->capabilities as $capability) {
-						$capabilities .= $capability->name.' ';	
 					}
-					$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
-					
-					$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
-
 				}
 				$geojson = json_encode(new \GeoJson\Feature\FeatureCollection($features));
 				return $geojson;
 			});
 			return $returngeojson;
-			/*Если не поиск*/
+
 	}
 }

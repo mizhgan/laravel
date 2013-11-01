@@ -91,7 +91,13 @@ class ImportsController extends BaseController {
 
         Input::file('file')->move($dir, $filename);
 
-        return Response::json(array('filelink' => $dir.$filename, 'total' => $this->countAllNetworksSQLite($dir.$filename), 'hash' => hash_file('md5', $dir.$filename)));
+        if (Import::where('hash', '=', hash_file('md5', $dir.$filename))->first()) {
+        	$hashexist = true;
+        } else {
+        	$hashexist = false;
+        }
+
+        return Response::json(array('filelink' => $dir.$filename, 'total' => $this->countAllNetworksSQLite($dir.$filename), 'hash' => hash_file('md5', $dir.$filename), 'hashexist' => $hashexist));
     }
 
 	/**
@@ -215,16 +221,18 @@ class ImportsController extends BaseController {
 			$this->import->create($input);
 			Cache::forever('lastimport', Input::get('hash'));
 
-			return Redirect::route('imports.index')
-				->with('message', "Импорт успешен. Всего обработано $count_new_networks новых точек, $count_new_locations новых местоположений, $count_new_capabilities новых возможностей и $count_new_types новых типов.")
-				->with('state', 'success')
-				->with('sticky', 'true');
+			// return Redirect::route('imports.index')
+			// 	->with('message', "Импорт успешен. Всего обработано $count_new_networks новых точек, $count_new_locations новых местоположений, $count_new_capabilities новых возможностей и $count_new_types новых типов.")
+			// 	->with('state', 'success')
+			// 	->with('sticky', 'true');
+			return json_encode(array('success' => true));
 		}
 
-		return Redirect::route('imports.create')
-			->withInput()
-			->withErrors($validation)
-			->with('message', 'There were validation errors.');
+		// return Redirect::route('imports.create')
+		// 	->withInput()
+		// 	->withErrors($validation)
+		// 	->with('message', 'There were validation errors.');
+		return json_encode(array('success' => false));
 	}
 
 	/**

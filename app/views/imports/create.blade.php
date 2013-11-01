@@ -50,17 +50,17 @@
 </div>
 
 <div class='results'>
-	<div class='new_networks'></div>
-	<div class='exist_networks'></div>
+	<div data-val='0' data-text='Новых точек: ' class='new_networks'></div>
+	<div data-val='0' data-text='Существующих точек: ' class='exist_networks'></div>
 
-	<div class='new_locations'></div>
-	<div class='exist_locations'></div>
+	<div data-val='0' data-text='Новых местоположений: ' class='new_locations'></div>
+	<div data-val='0' data-text='Существующих местоположений: ' class='exist_locations'></div>
 
-	<div class='new_types'></div>
-	<div class='exist_types'></div>
+	<div data-val='0' data-text='Новых типов: ' class='new_types'></div>
+	<div data-val='0' data-text='Существующих типов: ' class='exist_types'></div>
 
-	<div class='new_capabilities'></div>
-	<div class='exist_capabilities'></div>
+	<div data-val='0' data-text='Новых возможностей: ' class='new_capabilities'></div>
+	<div data-val='0' data-text='Существующих возможностей: ' class='exist_capabilities'></div>
 
 	<div class='errors'></div>
 </div>
@@ -97,6 +97,18 @@ $(document).ready(function(){
 			});
     	}
 
+    	function resetprogress() {
+    		progress.hide();
+    		bar = $("div.progress-bar");
+    		bar.attr('aria-valuemax', importdata.total);
+    		bar.attr('aria-valuenow', 0);
+    		bar.attr('aria-valuemin', 0);
+    		bar.attr('style', 'width: 0%');
+			results.children().attr('data-val', 0);
+			results.children().text('');
+
+    	}
+
     	function parseprogress(data) {
     		bar = $("div.progress-bar");
     		bar.attr('aria-valuemax', importdata.total);
@@ -104,8 +116,51 @@ $(document).ready(function(){
     		bar.attr('style', 'width: ' + (parseInt(bar.attr('aria-valuenow')) / importdata.total * 100) + '%');
 
     		$.each(data, function(index, value) {
-			    results.children('.'+index).text(index + ': ' +value);
+    			results.children('.'+index).attr('data-val', parseInt(results.children('.'+index).attr('data-val')) + parseInt(value));
+			    results.children('.'+index).text(results.children('.'+index).attr('data-text') + results.children('.'+index).attr('data-val'));
 			});
+    	}
+
+    	function commitimport () {
+    		// Создадим новый объект типа FormData
+	        var data = new FormData();
+	        // Добавим в новую форму файл
+	        data.append('hash', importdata.hash);
+	        // Создадим асинхронный запрос
+	        $.ajax({
+	            // На какой URL будет послан запрос
+	            url: '/imports',
+	            // Тип запроса
+	            type: 'POST',
+	            // Какие данные нужно передать
+	            data: data,
+	            // Эта опция не разрешает jQuery изменять данные
+	            processData: false,		
+	            // Эта опция не разрешает jQuery изменять типы данных
+	            contentType: false,		
+	            // Формат данных ответа с сервера
+	            dataType: 'json',
+	            beforeSend: function() {
+	            	startbutton.attr('disabled','disabled');
+	            },
+	            // Функция удачного ответа с сервера
+	            success: function(result) { 	
+	                // Получили ответ с сервера (ответ содержится в переменной result)
+	                // Если в ответе есть объект filelink
+	                if (result.success) {	
+	                	window.location = '{{ URL::route("imports.index");}}';
+	                } else {
+	                	alert ('Не удалось завершить импорт, попробуйте еще раз.');
+	                	window.location = '{{ URL::route("imports.index");}}';
+	                }
+	            },
+	            // Что-то пошло не так
+	            error: function (result) {
+	                // Ошибка на стороне сервера
+	                progress.text("Something very wrong happened");
+	                progress.show();
+	            }
+	        });
     	}
     	
     	progress.hide();
@@ -124,6 +179,7 @@ $(document).ready(function(){
                 return false;
             }
             updateinfo(importdata);
+            resetprogress();
             startbutton.removeAttr('disabled');
             startbutton.text('Начать импорт');
     	});
@@ -135,7 +191,9 @@ $(document).ready(function(){
 	    	localdata.offset = 0;
 	    	localdata.count = 300;
 	    	localdata.total = '{{$total}}';
-	    	importsource[0].disabled = false;
+	    	@if (!Import::where('hash', '=', $hash)->first())
+	    		importsource[0].disabled = false;
+	    	@endif
 	    	infoblock.text('');
     	@endif
 
@@ -151,7 +209,7 @@ $(document).ready(function(){
         data.append('offset', importdata.offset);
         data.append('count', importdata.count);
         data.append('type', importdata.type);
-
+        progress.show();
 
         // Создадим асинхронный запрос
         $.ajax({
@@ -182,15 +240,17 @@ $(document).ready(function(){
                     // Сохраним значение в input'е
                     importdata.offset = parseInt(importdata.offset) + parseInt(importdata.count);
                     updateinfo(importdata);
-                    // Скроем ошибку
-                    progress.show();
+
                     parseprogress(result);
                     startbutton.removeAttr('disabled');
 
                     //Если все импортировано
                     if(parseInt(importdata.offset) >= parseInt(importdata.total)) {
                     	startbutton.attr('disabled','disabled');
-                    	startbutton.text('Импорт завершен');
+                    	startbutton.text('Импорт завершен, подождите...');
+                    	commitimport();
+                    } else {
+                    	startbutton.text('Продолжить импорт');
                     }
                 }
             },
@@ -244,14 +304,15 @@ $(document).ready(function(){
 			    	uploadeddata.offset = 0;
 			    	uploadeddata.count = 300;
 			    	uploadeddata.total = result.total;
-			    	importsource[1].disabled = false;
-                   
-                    // Скроем ошибку
-                    status.text('Успех: ' + result.filelink);
-                    status.show();
+			    	if (result.hashexist) {
+				    	status.text('Файл загружен, импорт не требуется: ' + result.filelink);
+	                    status.show();
+			    	} else {
+			    		importsource[1].disabled = false;
+			    		status.text('Файл загружен: ' + result.filelink);
+	                    status.show();
+			    	}
 
-                    startbutton.removeAttr('disabled');
-                    startbutton.text('Начать импорт');
                 } else {
                     // Выведет текст ошибки с сервера
                     status.text(result.message);

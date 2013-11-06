@@ -1,5 +1,13 @@
 @extends('layouts.scaffold')
 
+@section('title')
+Карта покрытия WiFi и GSM Кирово-Чепецка - Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}
+@stop
+
+@section('description')
+Карта покрытия WiFi и GSM Кирово-Чепецка. Открытые и закрытые точки доступа WiFi В Кирово-Чепецке. Точки WiFi с шифрованием WPA, WPA2, WEP, WPS. Точка с идентификатором {{{ $network->ssid }}}
+@stop
+
 @section('main')
 
 <h1>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h1>

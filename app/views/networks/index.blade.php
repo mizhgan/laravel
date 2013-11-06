@@ -1,5 +1,13 @@
 @extends('layouts.scaffold')
 
+@section('title')
+Карта покрытия WiFi и GSM Кирово-Чепецка - {{{$title}}}
+@stop
+
+@section('description')
+Карта покрытия WiFi и GSM Кирово-Чепецка. Открытые и закрытые точки доступа WiFi В Кирово-Чепецке. Точки WiFi с шифрованием WPA, WPA2, WEP, WPS. {{{$title}}}
+@stop
+
 @section('main')
 
 <h1>{{{$title}}}</h1>

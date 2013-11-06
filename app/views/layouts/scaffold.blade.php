@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+		<title> @yield('title') </title>
+		<meta name="description" content="@yield('description')">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 		<link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-theme.min.css') }}">
 		<link href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
@@ -34,7 +36,7 @@
 	              <span class="icon-bar"></span>
 	              <span class="icon-bar"></span>
 	            </button>
-	            <a class="navbar-brand" href="{{ route('home') }}">Карта точек Wi-Fi Кирово-Чепецка</a>
+	            <a class="navbar-brand" href="{{ route('home') }}">Wi-Fi и GSM в Кирово-Чепецке</a>
 	          </div>
 	          <div class="collapse navbar-collapse">
 	            <ul class="nav navbar-nav">

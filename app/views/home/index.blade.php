@@ -46,12 +46,6 @@ $(document).ready(function(){
                                             });
 
     var points = L.geoJson(null, {
-            style: function (feature) {
-                switch (feature.properties.type) {
-                    case 'W': return {color: "blue"};
-                    case 'G':   return {color: "green"};
-                }
-            },
             onEachFeature: function (feature, layer) {
                 var popupMessage = '<dl class="dl-horizontal"><dt>BSSID:</dt><dd><a href="/bssid/' + feature.properties.bssid + '">' + feature.properties.bssid + '</a></dd><dt>SSID:</dt><dd>' + feature.properties.ssid + '</dd><dt>Возможности:</dt><dd>' + feature.properties.capabilities + '</dd><dt>Уровень сигнала:</dt><dd>' + feature.properties.level + 'db</dd><dt>Последний замер:</dt><dd>' + feature.properties.time + '</dd></dl>';
                 layer.bindPopup(popupMessage);
@@ -61,10 +55,10 @@ $(document).ready(function(){
                 if (feature.properties.type == 'G') {
                     outicon = gsm;
                 } else {
-                    if ((feature.properties.capabilities.toLowerCase().indexOf('WEP'.toLowerCase()) != -1) || (feature.properties.capabilities.toLowerCase().indexOf('WPA'.toLowerCase()) != -1) || (feature.properties.capabilities.toLowerCase().indexOf('WPS'.toLowerCase()) != -1)) {
-                        outicon = wificlose;
-                    } else {
+                    if (feature.properties.open) {
                         outicon = wifiopen;
+                    } else {
+                        outicon = wificlose;
                     }
                 }
                 return new L.Marker(latlng, {icon: outicon});

@@ -46,7 +46,16 @@ class NetworksController extends BaseController {
 						foreach ($network->capabilities as $capability) {
 							$capabilities .= $capability->name.' ';	
 						}
-						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
+
+						if (stristr($capabilities, 'WPA') || stristr($capabilities, 'WEP') || stristr($capabilities, 'WPS')) {
+							//closed
+							$open = false;
+						} else {
+							//opened
+							$open = true;
+						}
+
+						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities, 'open' => $open);
 						
 						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 					}

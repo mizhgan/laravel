@@ -46,7 +46,7 @@ class NetworksController extends BaseController {
 						foreach ($network->capabilities as $capability) {
 							$capabilities .= $capability->name.' ';	
 						}
-						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
+						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
 						
 						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 					}

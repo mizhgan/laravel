@@ -22,6 +22,10 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 $(document).ready(function(){ 
 
+    $('.dropdown-menu input, .dropdown-menu label').click(function(e) {
+        e.stopPropagation();
+    });
+
     $('#debug').html("Загрузка GEOjson");
 
     var pointMarkerOptions = {
@@ -67,7 +71,7 @@ $(document).ready(function(){
 
     function makeSsidDatumArray() {
         var ret = [];
-        points.eachLayer(function (point) {
+        tomap.eachLayer(function (point) {
             ret.push({  value: point.feature.properties.ssid,
                         point: point
                     });
@@ -76,7 +80,7 @@ $(document).ready(function(){
     }
     function makeBssidDatumArray() {
         var ret = [];
-        points.eachLayer(function (point) {
+        tomap.eachLayer(function (point) {
             ret.push({  value: point.feature.properties.bssid,
                         point: point
                     });
@@ -87,15 +91,38 @@ $(document).ready(function(){
     var markers = new L.MarkerClusterGroup({ spiderfyOnMaxZoom: true, /* disableClusteringAtZoom: 18, */ maxClusterRadius: 40});
     map.spin(true);
     var starttime = new Date().getTime();
-    $.getJSON('/networks', function (json) {
-        var endtime = new Date().getTime();
-        $('#debug').html(endtime-starttime);
-        map.spin(false);
-        points.addData(json);
-        markers.addLayer(points);
-        map.addLayer(markers);
-        console.log(markers);
 
+    var tomap = new L.LayerGroup();
+
+    function showmarkers() {
+
+        $('#main-search').typeahead('destroy');
+        tomap.clearLayers();
+        var showwifi, showgsm, showopen, showclose = false;
+        $.each($("[name='showselect']:checked"), function(a, b) {
+                if (b.value == 'W') showwifi = true;
+                if (b.value == 'G') showgsm = true;
+                if (b.value == 'open') showopen = true;
+                if (b.value == 'close') showclose = true;
+            });
+        points.eachLayer(function (point) {
+
+            if (point.feature.properties.type == 'W') {
+                if (showwifi) {
+                    if (point.feature.properties.open) {
+                        if (showopen) tomap.addLayer(point);
+                    } else {
+                        if (showclose) tomap.addLayer(point);
+                    }
+                }
+            } else {
+                if (showgsm) tomap.addLayer(point);
+            }
+            
+        });
+
+        markers.clearLayers();
+        markers.addLayer(tomap);
 
         //Поиск с автокомплитом
         $('#main-search').typeahead([
@@ -108,6 +135,30 @@ $(document).ready(function(){
             local: makeBssidDatumArray()
           }
         ]);
+
+        //console.log($('#main-search').typeahead());
+    }
+
+    showselect = $('[name="showselect"]')
+    showselect.change(function() {
+            showmarkers();
+        });
+
+    $.getJSON('/networks', function (json) {
+        var endtime = new Date().getTime();
+        $('#debug').html(endtime-starttime);
+        map.spin(false);
+        points.addData(json);
+        
+        map.addLayer(markers);
+
+        //markers.addLayer(points);
+        showmarkers();
+
+        console.log(points);
+
+
+        
 
         $('#main-search').on('typeahead:selected', function(e, d){
             //map.setView(d.point.getLatLng(), 18);

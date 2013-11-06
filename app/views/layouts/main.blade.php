@@ -39,6 +39,35 @@
 	          <div class="collapse navbar-collapse">
 	            <ul class="nav navbar-nav">
 	              <li>{{ link_to_route('networks.index', 'Точки') }}</li>
+	              <li class="dropdown">
+		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Показывать... <b class="caret"></b></a>
+		                <ul class="dropdown-menu">
+		                	<li>
+	                			<label style="font-weight: normal;">
+  									&nbsp;&nbsp;&nbsp;{{Form::checkbox('showselect', 'G', true)}}
+  									GSM
+  								</label>
+  							</li>
+				            <li>
+				            	<label style="font-weight: normal;">
+				            		&nbsp;&nbsp;&nbsp;{{Form::checkbox('showselect', 'W', true)}}
+				            		WiFi
+				            	</label>
+				            </li>
+				            <li>
+				            	<label style="font-weight: normal;">
+				            		&nbsp;&nbsp;&nbsp;{{Form::checkbox('showselect', 'open', true)}}
+				            		Открытые
+				            	</label>
+				            </li>
+				            <li>
+				            	<label style="font-weight: normal;">
+				            		&nbsp;&nbsp;&nbsp;{{Form::checkbox('showselect', 'close', true)}}
+				            		Закрытые
+				            	</label>
+				            </li>
+						</ul>
+		          </li>
 	              
 	              @if(!Auth::guest())
 	              	@if(Auth::user()->isAdmin())

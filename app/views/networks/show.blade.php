@@ -13,12 +13,15 @@
 <h1>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h1>
 
 <p>{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</p>
+<p class="text-right"><a href="#disqus_thread">Комментарии</a></p>
 
 @include('networks._networkdetailsopen')
 @include('networks._networkdetails')
 @include('networks._networkdetailsclose')
 
 <div id="map-network-{{{$network->getBssid()}}}" class="map-network"></div>
+
+<div id="disqus_thread"></div>
 
 @stop
 
@@ -62,5 +65,29 @@ $(document).ready(function(){
 });
 
 </script>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'chepetsk-wifi-map'; // required: replace example with your forum shortname
+
+    var disqus_identifier = '{{{$network->id}}}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+	/* * * DON'T EDIT BELOW THIS LINE * * */
+	(function () {
+	    var s = document.createElement('script'); s.async = true;
+	    s.type = 'text/javascript';
+	    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+	    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+	}());
+</script>
+
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 
 @stop

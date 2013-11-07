@@ -28,6 +28,9 @@
 @section('scripts')
 
 <script>
+
+$('th span').popover();
+
 // create a map in the "map" div, set the view to a given place and zoom
 var map = L.map('map-network-{{{$network->getBssid()}}}').setView([58.5436, 50.0429], 15);
 

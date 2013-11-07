@@ -32,3 +32,11 @@
 
 
 @stop
+
+@section('scripts')
+
+<script type="text/javascript">
+	$('th span').popover();
+</script>
+
+@stop

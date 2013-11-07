@@ -1,4 +1,4 @@
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-hover">
 	<thead>
 		<tr>
 			<th>BSSID

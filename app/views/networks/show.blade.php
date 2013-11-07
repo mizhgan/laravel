@@ -10,18 +10,32 @@
 
 @section('main')
 
-<h1>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h1>
 
-<p>{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</p>
-<p class="text-right"><a href="#disqus_thread">Комментарии</a></p>
+<div class="panel panel-default">
+	<div class="panel-heading">
+    	<h2>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h2>
+  	</div>
+  	<div class="panel-body">
+		<span class="pull-left">{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</span>
+		<span class="pull-right"><a href="#disqus_thread">Комментарии</a></span>
+	</div>
 
-@include('networks._networkdetailsopen')
-@include('networks._networkdetails')
-@include('networks._networkdetailsclose')
+	@include('networks._networkdetailsopen')
+	@include('networks._networkdetails')
+	@include('networks._networkdetailsclose')
+</div>
 
-<div id="map-network-{{{$network->getBssid()}}}" class="map-network"></div>
+<div class="panel panel-default">
+  	<div class="panel-body">
+		<div class="col-md-12 map-network" id="map-network-{{{$network->getBssid()}}}" ></div>
+	</div>
+</div>
 
-<div id="disqus_thread"></div>
+<div class="panel panel-default">
+  	<div class="panel-body">
+		<div class="col-md-12" id="disqus_thread"></div>
+	</div>
+</div>
 
 @stop
 

@@ -40,6 +40,12 @@
 	          </div>
 	          <div class="collapse navbar-collapse">
 	            <ul class="nav navbar-nav">
+	              <li>
+	              	<!-- Button trigger modal -->
+					<button title="Я ничего не понимаю!" class="btn btn-default btn-lg" data-toggle="modal" data-target="#HelpModal">
+						<span class="glyphicon glyphicon-question-sign"></span> 
+					</button>
+				  </li>
 	              <li>{{ link_to_route('networks.index', 'Точки') }}</li>
 	              <li class="dropdown">
 		                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Показывать... <b class="caret"></b></a>
@@ -70,7 +76,7 @@
 				            </li>
 						</ul>
 		          </li>
-	              
+		          
 	              @if(!Auth::guest())
 	              	@if(Auth::user()->isAdmin())
 		              <li class="dropdown">
@@ -101,11 +107,12 @@
 	              @endif
 
 	            </ul>
-	            <form class="navbar-form navbar-right" role="search">
-			      <div class="form-group">
-			        <input id="main-search" type="text" class="form-control" placeholder="Поиск...">
-			      </div>
-			    </form>
+		        <form class="navbar-form navbar-right" role="search">
+				    <div class="form-group">
+					    <input id="main-search" type="text" class="form-control" placeholder="Поиск...">
+				    </div>
+				</form>
+	            
 	          </div><!--/.nav-collapse -->
 	        </div>
 	      </div>

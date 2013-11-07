@@ -12,6 +12,63 @@
 
 <div id="map"></div>
 
+<!-- Modal -->
+<div class="modal fade" id="HelpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Что это, и вообще зачем?</h4>
+      </div>
+      <div class="modal-body">
+        Здравствуйте!
+        Вы находитесь на сайте, где собирается, систематизируется и визуализируется информация о покрытии нашего города (Кирово-Чепецк, если кто забыл) безпроводными сетями. В частности - сетями WiFi, и, немножко, GSM. Главная страница сайта представляет из себя карту, на которую нанесены условные обозначения (маркеры). Давайте с ними разберемся:
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Маркер</th>
+                    <th>Обозначение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span id="legendopenwifi"></span></td>
+                    <td>Открытая точка Wifi, не требует аутентификации</td>
+                </tr>
+                <tr>
+                    <td><span id="legendclosewifi"></span></td>
+                    <td>Закрытая точка Wifi, требует аутентификации</td>
+                </tr>
+                <tr>
+                    <td><span id="legendgsm"></span></td>
+                    <td>Базовая станция GSM</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="marker-cluster marker-cluster-medium" tabindex="0" style="width: 40px; height: 40px; opacity: 1; z-index: 321; position: static">
+                            <div style="position: relative; top: 5px;">
+                                <span>
+                                    34
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>Кластер маркеров, обозначенных выше. Используется для более удобного обозначения на карте большого количества маркеров. При клике автоматически приближает карту, чтобы показать содержащиеся в нем маркеры. При наведении показывает границы на карте, в которых находятся содержащиеся в нем маркеры. Цифра и цвет обозначают количество содержащихся в нем маркеров.</td>
+                </tr>
+            </tbody>
+        </table>
+        Управлять картой просто - зажмите левую кнопку мыши и тащите. Колесико зума увеличивает/уменьшает масштаб.
+        При клике на маркере появляется краткая информация о точке и ссылка на страницу точки с подробной информацией и комментариями.
+        В верхней части страницы находится меню, с помощью которого можно перейти к списку всех точек и отфильтровать отображаемые на карте точки.
+        В правом верхнем углу расположена форма поиска - начните вводить часть SSID или BSSID точки и кликните по выпадающим результатам.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">ОК, я все понял!</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @stop
 
 @section('scripts')
@@ -56,6 +113,13 @@ $(document).ready(function(){
                                                 icon: 'phone', 
                                                 color: 'purple'
                                             });
+
+    $('#legendopenwifi').append(wifiopen.createIcon());
+    $('#legendopenwifi div').css('position', 'static').css('margin-top','0px').css('margin-left','0px');
+    $('#legendclosewifi').append(wificlose.createIcon());
+    $('#legendclosewifi div').css('position', 'static').css('margin-top','0px').css('margin-left','0px');
+    $('#legendgsm').append(gsm.createIcon());
+    $('#legendgsm div').css('position', 'static').css('margin-top','0px').css('margin-left','0px');
 
     var points = L.geoJson(null, {
             onEachFeature: function (feature, layer) {

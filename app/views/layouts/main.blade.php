@@ -128,7 +128,7 @@
 	      <div class="container">
 	      	<div class="row">
 			  <div class="col-md-4"><p class="text-muted credit">Карта точек Wi-Fi Кирово-Чепецка</p></div>
-			  @include('partials.stats');
+			  @include('partials.stats')
 	        </div>
 	      </div>
 	    </div>

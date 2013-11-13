@@ -31,7 +31,7 @@ class NetworksController extends BaseController {
 
 			/*Если не поиск, то отдаем все в формате GeoJSON, используя кэш*/
 			$geojson = '';
-			$returngeojson = Cache::remember('geojsonpoints', 1440, function()
+			$returngeojson = Cache::rememberForever('geojsonpoints', function()
 			{
 				$networks = $this->network->all();//take(100)->get(); //Дебаг! Изменить на $this->network->all();
 				$features = array();

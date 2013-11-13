@@ -228,6 +228,7 @@ class ImportsController extends BaseController {
 		{
 			$this->import->create($input);
 			Cache::forever('lastimport', Input::get('hash'));
+			Cache::forget('geojsonpoints');
 
 			// return Redirect::route('imports.index')
 			// 	->with('message', "Импорт успешен. Всего обработано $count_new_networks новых точек, $count_new_locations новых местоположений, $count_new_capabilities новых возможностей и $count_new_types новых типов.")

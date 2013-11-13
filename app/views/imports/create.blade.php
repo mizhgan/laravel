@@ -201,6 +201,9 @@ $(document).ready(function(){
     //Импорт
 
     startbutton.on('click', function(){
+    	//выключим все элементы форм
+    	uploadInput.attr('disabled', 'disabled');
+    	importsource.attr('disabled', 'disabled');
 
         // Создадим новый объект типа FormData
         var data = new FormData();

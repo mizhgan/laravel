@@ -4,38 +4,43 @@
 
 <h1>Импортирование</h1>
 
-{{Form::radio('importsource', 'local')}}
-<h2>Локальный файл базы данных для импорта:</h2>
+<div class="row">
+  <div class="col-md-6">
+  	<h2>{{Form::radio('importsource', 'local')}} Локальный файл базы данных для импорта:</h2>
 
-<p>{{Import::$db_path}}</p>
+	<p>Путь к файлу: {{Import::$db_path}}</p>
 
-@if($hash)
+	<p>Статус: 
 
-	@if (Import::where('hash', '=', $hash)->first())
-		<p>Не надо импортировать</p>
+	@if($hash)
+
+		@if (Import::where('hash', '=', $hash)->first())
+			Не надо импортировать
+		@else
+			Надо импортировать
+		@endif
+
 	@else
-		<p>Надо импортировать</p>
+		Файла локальной БД нет
 	@endif
 
-@else
-	
-	<p>Файла локальной БД нет</p>
+	</p>
 
-@endif
+  </div>
+  
+  <div class="col-md-6">
 
-{{Form::radio('importsource', 'uploaded')}}
-<h2>Загрузить базу данных для импорта:</h2>
+	<h2>{{Form::radio('importsource', 'uploaded')}} Загрузить базу данных для импорта:</h2>
 
-{{ Form::open() }}
-    <ul>
-        <li>
-            {{ Form::label('file', 'Выбрать файл БД:') }}
-			{{ Form::file('file')}}
-        </li>
-    </ul>
-{{ Form::close() }}
+	{{ Form::open() }}
+	            {{ Form::label('file', 'Выбрать файл БД:') }}
+				{{ Form::file('file')}}
+	{{ Form::close() }}
 
-<div class="status"></div>
+	Статус: <span class="status"></span>
+
+  </div>
+</div>
 
 <h2>Информация</h2>
 
@@ -83,7 +88,7 @@ $(document).ready(function(){
     var startbutton = $('#importstart'), //кнопка начала импорта
     	uploadInput = $('#file'), // Инпут с файлом
         importsource = $('[name="importsource"]'), // Селектор импорта
-        status = $('div.status'), // Вывод ошибки при загрузке файла
+        status = $('span.status'), // Вывод ошибки при загрузке файла
         results = $('div.results'), // Вывод результатов импортирования
         infoblock = $('div.infoblock'), // Блок информации о БД
         progress = $('div.progress'); // Вывод прогресса импортирования

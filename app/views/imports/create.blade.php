@@ -246,9 +246,10 @@ $(document).ready(function(){
 
                     //Если все импортировано
                     if(parseInt(importdata.offset) >= parseInt(importdata.total)) {
-                    	startbutton.attr('disabled','disabled');
-                    	startbutton.text('Импорт завершен, подождите...');
-                    	commitimport();
+                    	//startbutton.attr('disabled','disabled');
+                    	startbutton.text('Завершить импорт');
+                    	startbutton.off('click');
+                    	startbutton.on('click', commitimport);
                     } else {
                     	startbutton.text('Продолжить импорт');
                     }

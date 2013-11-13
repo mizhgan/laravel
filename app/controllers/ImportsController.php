@@ -103,7 +103,7 @@ class ImportsController extends BaseController {
 	/**
 	 * Store a given range of imported resource.
 	 *
-	 * @return string Status
+	 * @return string Stats
 	 */
 	public function performStore()
 	{	
@@ -122,12 +122,20 @@ class ImportsController extends BaseController {
 		$count_exist_capabilities = 0;
 		$count_exist_types = 0;
 
+		$count_updated_networks = 0;
+
 		if ($db = new SQLite3($filename)) {
 			$r_networks =  $db->query('select * from network limit '.$count.' offset '.$offset);
 			
 		    while($result_network = $r_networks->fetchArray()) {
 		    		if ($new_network = Network::where('bssid', '=', $result_network['bssid'])->first()) { //если точка уже есть в базе
-	                    $count_exist_networks++;
+		    			if ($new_network->ssid != $result_network['ssid'] || $new_network->frequency != $result_network['frequency']) { //если изменились ssid или freq - обновляем данные о точке
+		    				$new_network->ssid = $result_network['ssid'];
+							$new_network->frequency = $result_network['frequency'];
+							$new_network->save();
+							$count_updated_networks++;
+		    			}
+		    			$count_exist_networks++;
 	                } else { //есле нет, создаем точку и сохраняем
 			    		$new_network = new Network;
 						$new_network->bssid = $result_network['bssid'];
@@ -200,7 +208,7 @@ class ImportsController extends BaseController {
 	                $new_network->locations()->sync($network_locations);
 		    }
 
-		    return json_encode(array('error' => false, 'new_networks' => $count_new_networks, 'exist_networks' => $count_exist_networks, 'new_locations' => $count_new_locations, 'exist_locations' => $count_exist_locations, 'new_types' => $count_new_types, 'exist_types' => $count_exist_types, 'new_capabilities' => $count_new_capabilities, 'exist_capabilities' => $count_exist_capabilities));
+		    return json_encode(array('error' => false, 'new_networks' => $count_new_networks, 'exist_networks' => $count_exist_networks, 'new_locations' => $count_new_locations, 'exist_locations' => $count_exist_locations, 'new_types' => $count_new_types, 'exist_types' => $count_exist_types, 'new_capabilities' => $count_new_capabilities, 'exist_capabilities' => $count_exist_capabilities, 'updated_networks' => $count_updated_networks));
 		} else {
 		    return json_encode(array('error' => true, 'err_message' => 'Error with SQLite3 database'));
 		}

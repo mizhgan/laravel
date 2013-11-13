@@ -52,6 +52,7 @@
 <div class='results'>
 	<div data-val='0' data-text='Новых точек: ' class='new_networks'></div>
 	<div data-val='0' data-text='Существующих точек: ' class='exist_networks'></div>
+	<div data-val='0' data-text='Обновленных точек: ' class='updated_networks'></div>
 
 	<div data-val='0' data-text='Новых местоположений: ' class='new_locations'></div>
 	<div data-val='0' data-text='Существующих местоположений: ' class='exist_locations'></div>
@@ -61,6 +62,7 @@
 
 	<div data-val='0' data-text='Новых возможностей: ' class='new_capabilities'></div>
 	<div data-val='0' data-text='Существующих возможностей: ' class='exist_capabilities'></div>
+
 
 	<div class='errors'></div>
 </div>

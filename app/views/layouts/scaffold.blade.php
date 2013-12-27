@@ -98,7 +98,7 @@
 
         <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 
-        <script src="http://fgnass.github.io/spin.js/dist/spin.min.js"></script>
+        <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
 
         <script src="http://makinacorpus.github.io/Leaflet.Spin/leaflet.spin.js"></script>
 

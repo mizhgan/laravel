@@ -19,14 +19,58 @@
 	            @endforeach
 			</td>
 			<td>
-			  	@foreach($network->locations as $location)
-			  		@if ($location->id === $network->loudest_location()->id)
-					    <span class="label label-primary"><span class="glyphicon glyphicon-map-marker"></span>
-					@else
-					    <span class="label label-default"><span class="glyphicon glyphicon-map-marker"></span>
-					@endif
-					{{{ $location->lat }}} : {{{ $location->lon }}} @ {{{ $location->time }}} @ {{{ $location->level }}}db</span>
-				@endforeach
+				<div class="panel-group" id="accordion-{{{$network->getBssid()}}}">
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion-{{{$network->getBssid()}}}" href="#chosenlocations-{{{$network->getBssid()}}}">
+				          Характерные замеры
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="chosenlocations-{{{$network->getBssid()}}}" class="panel-collapse collapse in">
+				      <div class="panel-body">
+				        <div>
+							Лучший сигнал:
+						</div>
+						<div class="label label-primary">
+							<span class="glyphicon glyphicon-map-marker"></span>
+							{{{ $network->loudest_location()->lat }}} : {{{ $network->loudest_location()->lon }}} @ {{{ $network->loudest_location()->time }}} @ {{{ $network->loudest_location()->level }}}db
+						</div>
+						<div>
+							Последний замер:
+						</div>
+						<div class="label label-default">
+							<span class="glyphicon glyphicon-map-marker"></span>
+							{{{ $network->latest_location()->lat }}} : {{{ $network->latest_location()->lon }}} @ {{{ $network->latest_location()->time }}} @ {{{ $network->latest_location()->level }}}db
+						</div>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="panel panel-default">
+				    <div class="panel-heading">
+				      <h4 class="panel-title">
+				        <a data-toggle="collapse" data-parent="#accordion-{{{$network->getBssid()}}}" href="#alllocations--{{{$network->getBssid()}}}">
+				          Все замеры ({{{count($network->locations)}}})
+				        </a>
+				      </h4>
+				    </div>
+				    <div id="alllocations--{{{$network->getBssid()}}}" class="panel-collapse collapse">
+				      <div class="panel-body">
+				        <div>
+						  	@foreach($network->locations as $location)
+						  		@if ($location->id === $network->loudest_location()->id)
+								    <div class="label label-primary"><span class="glyphicon glyphicon-map-marker"></span>
+								@else
+								    <div class="label label-default"><span class="glyphicon glyphicon-map-marker"></span>
+								@endif
+								{{{ $location->lat }}} : {{{ $location->lon }}} @ {{{ $location->time }}} @ {{{ $location->level }}}db</div>
+							@endforeach
+						</div>
+				      </div>
+				    </div>
+				  </div>
+				</div>
 			</td>
 			@if(!Auth::guest())
 				@if(Auth::user()->isAdmin())

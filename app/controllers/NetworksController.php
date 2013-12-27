@@ -128,6 +128,11 @@ class NetworksController extends BaseController {
 	 */
 	public function showBssid($bssid)
 	{
+		if (Request::ajax()) {
+			$json = file_get_contents("http://www.macvendorlookup.com/api/AQzWBUT/$bssid");
+			return $json;
+		}
+
 		if ($network = $this->network->where('bssid', '=', $bssid)->first()) {
 			return View::make('networks.show', compact('network'));
 		}

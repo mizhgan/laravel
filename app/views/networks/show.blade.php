@@ -16,6 +16,9 @@
     	<h2>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h2>
   	</div>
   	<div class="panel-body">
+		<div id="macinfo">Загрузка информации об идентификаторе сети...</div>
+	</div>
+  	<div class="panel-body">
 		<span class="pull-left">{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</span>
 		<span class="pull-right"><a href="#disqus_thread">Комментарии</a></span>
 	</div>
@@ -54,8 +57,26 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 
-$(document).ready(function(){ 
-    
+$(document).ready(function(){
+
+	var macinfo = $("#macinfo");
+	$.getJSON('/bssid/{{{ $network->bssid }}}')
+		.done(function (json) {
+			if (json) {
+        		macinfo.text("Информация об идентификаторе сети: " + json[0].company);
+        	} else {
+        		macinfo.text("Информация об идентификаторе сети: Нет данных");
+        	}
+    	})
+    	.fail(function( jqxhr, textStatus, error ) {
+    		macinfo.text("Информация об идентификаторе сети: Нет данных");
+		    var err = textStatus + ", " + error;
+		    console.log( "Request Failed: " + err );
+		});
+
+	//var spinner = new Spinner(opts).spin(macinfo); 
+	//macinfo.prepend(spinner.el);
+
     var points = new L.featureGroup();
 
     @foreach($network->locations as $location)

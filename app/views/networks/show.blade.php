@@ -85,9 +85,9 @@ $(document).ready(function(){
 	$.getJSON('/nominatim/{{{ $network->loudest_location()->lat }}},{{{ $network->loudest_location()->lon }}}')
 		.done(function (json) {
 			if (json.length) {
-        		nominatiminfo.text("Информация координатах: " + json[0].display_name);
+        		nominatiminfo.text("Информация о координатах: " + json[0].display_name);
         	} else {
-        		nominatiminfo.text("Информация координатах: Нет данных");
+        		nominatiminfo.text("Информация о координатах: Нет данных");
         	}
     	})
     	.fail(function( jqxhr, textStatus, error ) {

@@ -16,10 +16,14 @@
     	<h2>Информация о точке {{{ $network->bssid }}} {{{ $network->ssid }}}</h2>
   	</div>
   	<div class="panel-body">
-		<div id="macinfo">Загрузка информации об идентификаторе сети...</div>
-	</div>
-	<div class="panel-body">
-		<div id="nominatiminfo">Загрузка информации о координатах...</div>
+  		<div class="row">
+		  <div class="col-md-6">
+		  		<div id="macinfo">Загрузка информации об идентификаторе сети...</div>
+		  </div>
+		  <div class="col-md-6">
+		  		<div id="nominatiminfo">Загрузка информации о координатах...</div>
+		  </div>
+		</div>
 	</div>
   	<div class="panel-body">
 		<span class="pull-left">{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</span>

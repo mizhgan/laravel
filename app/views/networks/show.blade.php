@@ -18,6 +18,9 @@
   	<div class="panel-body">
 		<div id="macinfo">Загрузка информации об идентификаторе сети...</div>
 	</div>
+	<div class="panel-body">
+		<div id="nominatiminfo">Загрузка информации о координатах...</div>
+	</div>
   	<div class="panel-body">
 		<span class="pull-left">{{ link_to_route('networks.index', 'Вернуться ко всем точкам') }}</span>
 		<span class="pull-right"><a href="#disqus_thread">Комментарии</a></span>
@@ -70,6 +73,21 @@ $(document).ready(function(){
     	})
     	.fail(function( jqxhr, textStatus, error ) {
     		macinfo.text("Информация об идентификаторе сети: Нет данных");
+		    var err = textStatus + ", " + error;
+		    console.log( "Request Failed: " + err );
+		});
+
+    var nominatiminfo = $("#nominatiminfo");
+	$.getJSON('/nominatim/{{{ $network->loudest_location()->lat }}},{{{ $network->loudest_location()->lon }}}')
+		.done(function (json) {
+			if (json.length) {
+        		nominatiminfo.text("Информация координатах: " + json[0].display_name);
+        	} else {
+        		nominatiminfo.text("Информация координатах: Нет данных");
+        	}
+    	})
+    	.fail(function( jqxhr, textStatus, error ) {
+    		nominatiminfo.text("Информация о координатах: Нет данных");
 		    var err = textStatus + ", " + error;
 		    console.log( "Request Failed: " + err );
 		});

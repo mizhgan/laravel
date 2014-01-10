@@ -142,6 +142,23 @@ class NetworksController extends BaseController {
 	}
 
 	/**
+	 * Request for OSM Nominatim service.
+	 *
+	 * @param  str  $request
+	 * @return json Response
+	 */
+	public function requestNominatim($request)
+	{
+		if (Request::ajax()) {
+			$json = file_get_contents("http://nominatim.openstreetmap.org/search.php?q=".urlencode($request)."&format=json");
+			return $json;
+		}
+
+		return Redirect::route('home')
+			->with('message', 'Эту страницу нельзя запрашивать напрямую.');
+	}
+
+	/**
      * Display a listing of networks that belongs to type.
      *
      * @param  string  $name

@@ -34,6 +34,8 @@ Route::get('by_type/{name}', array('as' => 'networks.by_type', 'uses' => 'Networ
 
 Route::get('by_capability/{name}', array('as' => 'networks.by_capability', 'uses' => 'NetworksController@byCapability'))->where('name', '[A-Za-z0-9 -_]+');
 
+Route::get('nominatim/{request}', array('as' => 'networks.nominatim', 'uses' => 'NetworksController@requestNominatim'));
+
 Route::group(array('before' => 'admin.auth'), function()
 {
     Route::get('dashboard', function()

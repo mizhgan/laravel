@@ -139,7 +139,7 @@
 
 		<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>        
 
-		<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.js"></script>
+		<script src="http://twitter.github.io/typeahead.js/releases/latest/typeahead.bundle.js"></script>
 
         <script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 

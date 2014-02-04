@@ -227,7 +227,7 @@ $(document).ready(function(){
         //markers.addLayer(points);
         showmarkers();
 
-        console.log(points);
+        //console.log(points);
 
 
         

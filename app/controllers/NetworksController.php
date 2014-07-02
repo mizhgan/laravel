@@ -35,6 +35,7 @@ class NetworksController extends BaseController {
 			{
 				$networks = $this->network->all();//take(100)->get(); //Дебаг! Изменить на $this->network->all();
 				$features = array();
+				$networksCollection = array("type" => "FeatureCollection", "features" => array());
 				foreach ($networks as $key => $network) {
 
 					if ($network->locations->all()) {
@@ -56,12 +57,25 @@ class NetworksController extends BaseController {
 						}
 
 						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities, 'open' => $open);
+						$networkFeature = array(
+											    'type' => 'Feature',
+											    'properties' => $prop,
+											    'geometry' => array(
+											      'type' => 'Point',
+											      'coordinates' => array( 
+											        floatval($loudest_location->lon),
+											        floatval($loudest_location->lat)
+											      )
+											    )
+											  );
+						array_push($networksCollection["features"], $networkFeature);
 						
-						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
+						//$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 					}
 
 				}
-				$geojson = json_encode(new \GeoJson\Feature\FeatureCollection($features));
+				//$geojson = json_encode(new \GeoJson\Feature\FeatureCollection($features));
+				$geojson = json_encode($networksCollection);
 				return $geojson;
 			});
 			return $returngeojson;

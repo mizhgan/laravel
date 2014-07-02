@@ -276,7 +276,7 @@ class NetworksController extends BaseController {
 			// }
 			// return "ok";
 			$geojson = '';
-			$returngeojson = Cache::remember('geojsonpoints', 60, function()
+			$returngeojson = Cache::remember('geojsondebug', 60, function()
 			{
 				$networks = $this->network->all();//take(100)->get(); //Дебаг! Изменить на $this->network->all();
 				$features = array();
@@ -290,7 +290,7 @@ class NetworksController extends BaseController {
 						foreach ($network->capabilities as $capability) {
 							$capabilities .= $capability->name.' ';	
 						}
-						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'frequency' => $network->frequency, 'level' => $loudest_location->level, 'altitude' => $loudest_location->altitude, 'accuracy' => $loudest_location->accuracy, 'time' => $latest_location->time, 'type' => $type, 'capabilities' => $capabilities);
+						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type);
 						
 						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
 

@@ -275,31 +275,20 @@ class NetworksController extends BaseController {
 			// 	}
 			// }
 			// return "ok";
+			echo memory_get_usage(true)."<br>";
 			$geojson = '';
-			$returngeojson = Cache::remember('geojsondebug', 60, function()
-			{
-				$networks = $this->network->all();//take(100)->get(); //Дебаг! Изменить на $this->network->all();
-				$features = array();
-				foreach ($networks as $key => $network) {
-					if ($network->locations->all()) {
-						$loudest_location = $network->loudest_location();
-						$latest_location = $network->latest_location();
-
-						$type = $network->types->first()->name;
-						$capabilities = '';
-						foreach ($network->capabilities as $capability) {
-							$capabilities .= $capability->name.' ';	
-						}
-						$prop = array('bssid' => $network->bssid, 'ssid' => $network->ssid, 'level' => $loudest_location->level, 'time' => $latest_location->time, 'type' => $type);
-						
-						$features[] = new \GeoJson\Feature\Feature(new \GeoJson\Geometry\Point([floatval($loudest_location->lon), floatval($loudest_location->lat)]), $prop);				
-
-					}
+			$networks = $this->network->all();//skip($curr)->take($take)->get(); //Дебаг! Изменить на $this->network->all();
+			$networksCollection = array("type" => "FeatureCollection", "features" => array());
+			foreach ($networks as $key => $network) {
+				if ($network->locations->all()) {
+					$networkFeature = $network->getGeojsonFeature();
+					array_push($networksCollection["features"], $networkFeature);
 				}
-				$geojson = json_encode(new \GeoJson\Feature\FeatureCollection($features));
-				return $geojson;
-			});
-			return $returngeojson;
+			}
+			$geojson = json_encode($networksCollection);
 
+			echo memory_get_usage(true)."<br>";
+
+			return $geojson;
 	}
 }

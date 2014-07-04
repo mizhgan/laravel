@@ -278,17 +278,25 @@ class NetworksController extends BaseController {
 			echo memory_get_usage(true)."<br>";
 			$geojson = '';
 			$networks = $this->network->all();//skip($curr)->take($take)->get(); //Дебаг! Изменить на $this->network->all();
-			$networksCollection = array("type" => "FeatureCollection", "features" => array());
+			//$networksCollection = array("type" => "FeatureCollection", "features" => array());
+			$networksCollectionJsonStart = '{"type":"FeatureCollection","features":[';
+			$networksCollectionJsonEnd = ']}';
+			$networksCollectionJson = '';
 			foreach ($networks as $key => $network) {
 				if ($network->locations->all()) {
-					$networkFeature = $network->getGeojsonFeature();
-					array_push($networksCollection["features"], $networkFeature);
+					//$networkFeature = $network->getGeojsonFeature();
+					//array_push($networksCollection["features"], $networkFeature);
+					$networksCollectionJson .= $network->getGeojsonFeatureToStr().",";
 				}
 			}
-			$geojson = json_encode($networksCollection);
+			$networksCollectionJson = trim($networksCollectionJson,",");
+			$networksCollectionJson = $networksCollectionJsonStart.$networksCollectionJson.$networksCollectionJsonEnd;
+			//$geojson = json_encode($networksCollection);
 
 			echo memory_get_usage(true)."<br>";
+			echo memory_get_peak_usage()."<br>";
 
-			return $geojson;
+			//return $geojson;
+			return $networksCollectionJson;
 	}
 }

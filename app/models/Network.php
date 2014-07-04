@@ -74,4 +74,8 @@ class Network extends Eloquent {
 					  );
 	}
 
+	public function getGeojsonFeatureToStr() {
+		return json_encode($this->getGeojsonFeature());
+	}
+
 }

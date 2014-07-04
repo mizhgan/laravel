@@ -53,12 +53,13 @@ class Network extends Eloquent {
 	public function getGeojsonFeature() {
 		$prop = array(
 						'bssid' => $this->bssid,
-						'ssid' => $this->ssid,
-						'level' => $this->loudest_location()->level,
-						'time' => $this->latest_location()->time,
-						'type' => $this->types->first()->name,
-						'capabilities' => $this->getCapabilitiesToStr(),
-						'open' => $this->isOpen()
+						//'ssid' => $this->ssid,
+						//'level' => $this->loudest_location()->level,
+						//'time' => $this->latest_location()->time,
+						//'type' => $this->types->first()->name,
+						//'capabilities' => $this->getCapabilitiesToStr(),
+						//'open' => $this->isOpen()
+						//Just for debugging
 					);
 		return array(
 					    'type' => 'Feature',
